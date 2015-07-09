@@ -1,0 +1,53 @@
+MovieBundle\Entity\Movie:
+  type: entity
+  table: movie
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    title:
+      type: string
+      length: 255
+      column: title
+    imdbLink:
+      type: string
+      length: 255
+      column: imdb_link
+    youtubeLink:
+      type: string
+      length: 255
+      column: youtube_link
+    description:
+      type: string
+      length: 1024
+      column: description
+    rating:
+      type: float
+      column: rating
+  manyToOne:
+    producer:
+      targetEntity: MovieBundle\Entity\Producer
+      joinColumn:
+        name: producer_id
+        referencedColumnName: id
+      inversedBy: movies
+    director:
+      targetEntity: MovieBundle\Entity\Person
+      joinColumn:
+        name: director_id
+        referencedColumnName: id
+      inversedBy: moviesDirected
+  manyToMany:
+    actors:
+      targetEntity: MovieBundle\Entity\Person
+      inversedBy: movies
+      joinTable:
+        name: movie_person
+        joinColumns:
+          movie_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          person_id:
+            referencedColumnName: id
